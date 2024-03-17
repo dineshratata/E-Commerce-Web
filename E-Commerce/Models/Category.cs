@@ -1,4 +1,4 @@
-﻿namespace E_Commerce
+﻿namespace E_Commerce.Models
 {
     public class Category
     {
@@ -9,11 +9,10 @@
         public string Name { get; set; }
 
 
-       
 
-    } 
+
+    }
 
 
 }
 
-    
