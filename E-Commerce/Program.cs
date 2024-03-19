@@ -7,6 +7,16 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 
 
+#region // Cors Config
+
+builder.Services.AddCors(options =>
+{
+
+    options.AddPolicy("CustomerPlocy", x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
+
+});
+
+#endregion
 
 
 builder.Services.AddControllers();
@@ -25,6 +35,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseCors();
 
 app.UseHttpsRedirection();
 
