@@ -1,7 +1,9 @@
-﻿using E_Commerce.Data;
-using E_Commerce.Models;
+﻿
+using DomainLayer.Models;
+using InfrastuctureLayer.Data;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+
 
 namespace E_Commerce.Controllers
 {
@@ -80,8 +82,9 @@ namespace E_Commerce.Controllers
                     var dataForRemoval  =  _dbContext.Category.FirstOrDefault(x => x.Id == id);
 
                      _dbContext.Category.Remove(dataForRemoval);
+                     _dbContext.SaveChanges();
 
-            return Ok("Record Deleted successFully");
+                     return Ok("Record Deleted successFully");
 
         }
 
@@ -117,22 +120,6 @@ namespace E_Commerce.Controllers
 
 
 
-        //[HttpDelete]
-        //public ActionResult Delete(int id)
-        //{
-        //    if(id == 0)
-        //    {
-        //        BadRequest("Enter a valid Number");
-
-        //    }
-
-        //              _dbContext.
-
-
-
-
-
-        //}
 
 
     }

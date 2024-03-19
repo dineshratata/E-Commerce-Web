@@ -1,7 +1,7 @@
-﻿using E_Commerce.Models;
+﻿using DomainLayer.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace E_Commerce.Data
+namespace InfrastuctureLayer.Data
 {
     public class ApplicationDbContext:DbContext
     {

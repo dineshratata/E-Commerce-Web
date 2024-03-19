@@ -1,4 +1,4 @@
-using E_Commerce.Data;
+using InfrastuctureLayer.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 
@@ -12,7 +12,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddCors(options =>
 {
 
-    options.AddPolicy("CustomerPlocy", x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
+    options.AddPolicy("CustomerPolicy", x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
 
 });
 
@@ -36,7 +36,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseCors();
+app.UseCors("CustomerPolicy");
 
 app.UseHttpsRedirection();
 
