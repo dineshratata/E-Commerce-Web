@@ -1,7 +1,9 @@
 ﻿
+using DomainLayer.Common.Contracts;
 using DomainLayer.Models;
 using InfrastuctureLayer.DbContexts;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 
 
@@ -11,11 +13,13 @@ namespace E_Commerce.Controllers
     [ApiController]
     public class CategoryController : ControllerBase
     {
-        private readonly ApplicationDbContext _dbContext;
+        private readonly  ICategoryRepository _categoryRepository;
 
-        public CategoryController(ApplicationDbContext dbContext)
+
+
+        public CategoryController( ICategoryRepository categoryRepository)
         {
-            _dbContext = dbContext;
+            _categoryRepository = categoryRepository;
         }
 
 
@@ -23,26 +27,39 @@ namespace E_Commerce.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
 
 
-        public ActionResult<Category> Get()
+        public async Task <ActionResult> Get()
         {
-                 var _categories   = _dbContext.Category.ToList();
 
-                 return Ok(_categories);
 
+           var categories = await _categoryRepository.GetAllAsync();
+
+            return Ok(categories);
 
 
 
 
         }
 
-
+        
         [ProducesResponseType(StatusCodes.Status200OK)]
         [HttpPost]
-        public ActionResult Create([FromBody] Category category )
+        public async Task <ActionResult> Create([FromBody] Category category )
         {
-            _dbContext.Category.Add(category);
-            _dbContext.SaveChanges();
-            return Ok(category);
+        
+
+              var  addedEntity = await _categoryRepository.CreateAsync(category);
+
+              return Ok(addedEntity);
+
+            
+            if ( addedEntity != null )
+            {
+
+                return Ok("Created Operation  Successfully");
+
+            }
+
+
 
 
         }
@@ -56,17 +73,21 @@ namespace E_Commerce.Controllers
         public ActionResult<Category>GetByid(int id)
         {
 
-                  var categoryDetails  =  _dbContext.Category.FirstOrDefault(x => x.Id == id);
 
-
-               if(categoryDetails == null)
+            var gottenentity = _categoryRepository.GetByIdAsync(x=>x.Id == id);
+                   
+            if(gottenentity == null)
             {
-                return NotFound($"You have Entered Wrong {id} ");
+
+
+                return BadRequest($"You have Entered {id} is Wrong");
 
             }
-                   
-                  return Ok(categoryDetails);
-                   
+
+            return Ok(gottenentity);
+
+
+
 
 
         }
@@ -75,38 +96,57 @@ namespace E_Commerce.Controllers
 
         [HttpDelete]
         [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
 
-        public ActionResult Delete(int id)
+        public async Task <ActionResult> Delete(int id)
         {
+            if(id == 0)
+            {
 
-                    var dataForRemoval  =  _dbContext.Category.FirstOrDefault(x => x.Id == id);
+               return BadRequest();
 
-                     _dbContext.Category.Remove(dataForRemoval);
-                     _dbContext.SaveChanges();
+            }
 
-                     return Ok("Record Deleted successFully");
+           var gottenEntity = await _categoryRepository.GetByIdAsync(x=>x.Id==id);
+
+
+            if (gottenEntity == null)
+            {
+                return NotFound();
+                    
+            }
+
+
+
+            await _categoryRepository.DeleteAsync(gottenEntity);
+
+            return NoContent();
+
+
+
 
         }
 
         [HttpPut]
         [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
 
-        public ActionResult Update(int id)
+        public async Task <ActionResult> Update([FromBody] Category category)
 
 
 
         {
 
-            if(id == 0)
+            if(!ModelState.IsValid)
             {
 
-                BadRequest("Enter a Valid Number");
+                BadRequest();
+
             }
 
 
-            var dataForRemoval = _dbContext.Category.FirstOrDefault(x => x.Id == id);
-
-            _dbContext.Category.Update(dataForRemoval);
+            await _categoryRepository.UpdateAsync(category);
 
             return NoContent();
 

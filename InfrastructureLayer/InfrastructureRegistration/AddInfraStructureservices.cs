@@ -11,7 +11,7 @@ namespace InfrastructureLayer.InfrastructureRegistration
 {
     public static class AddInfraStructureservices
     {
-        public static IServiceCollection AddInfraStructureServices(this ServiceCollection services)
+        public static IServiceCollection AddInfraStructureServices(this IServiceCollection services)
         {
             services.AddScoped(typeof(IGenericRepository<>),typeof (GenericeRepository<>));
             services.AddScoped <ICategoryRepository,CategoryRepository>();

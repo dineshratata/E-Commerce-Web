@@ -12,14 +12,12 @@ using System.Threading.Tasks;
 
 namespace InfrastructureLayer.Repositories
 {
-    public class CategoryRepository : GenericeRepository<Category>, ICategoryRepository
+    public class CategoryRepository :  GenericeRepository<Category>, ICategoryRepository 
     {
-        public CategoryRepository(ApplicationDbContext applicationDbContext ) :base(applicationDbContext)
+        public CategoryRepository(ApplicationDbContext _dbContext) : base(_dbContext)
         {
             
-
         }
-
 
         public async Task UpdateAsync(Category category)
         {

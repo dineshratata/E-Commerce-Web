@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace DomainLayer.Common.Contracts
 {
-    public interface IGenericRepository<T> where T : BaseModel
+    public interface IGenericRepository <T> where T : BaseModel
     {
 
         Task<T> CreateAsync (T entity);
@@ -17,7 +17,7 @@ namespace DomainLayer.Common.Contracts
 
         Task<T> GetByIdAsync (Expression<Func<T,bool>> condition );
 
-        Task DeleteAsync(T condition);
+        Task DeleteAsync (T entity);
 
 
 

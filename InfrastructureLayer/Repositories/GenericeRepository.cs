@@ -34,12 +34,12 @@ namespace InfrastructureLayer.Repositories
               
         }
 
-        public async Task DeleteAsync(T condition)
+        public async Task DeleteAsync(T entity)
         {
-            _dbContext.Set<T>().Remove(condition);
-            await _dbContext.SaveChangesAsync();
-          
 
+
+            _dbContext.Remove(entity);
+            await _dbContext.SaveChangesAsync();
 
 
         }
