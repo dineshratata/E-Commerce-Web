@@ -1,6 +1,6 @@
 ﻿
 using DomainLayer.Models;
-using InfrastuctureLayer.Data;
+using InfrastuctureLayer.DbContexts;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 

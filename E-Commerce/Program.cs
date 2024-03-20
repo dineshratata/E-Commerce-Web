@@ -1,11 +1,16 @@
-using InfrastuctureLayer.Data;
+using InfrastuctureLayer.DbContexts;
+using InfrastructureLayer.InfrastructureRegistration;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+#region AddInfraStructureServies
 
+builder.Services.AddInfraStructureServices();
+
+#endregion
 
 #region // Cors Config
 

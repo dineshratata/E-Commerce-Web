@@ -37,7 +37,7 @@ namespace InfrastructureLayer.Repositories
         public async Task DeleteAsync(T condition)
         {
             _dbContext.Set<T>().Remove(condition);
-            _dbContext.SaveChangesAsync();
+            await _dbContext.SaveChangesAsync();
           
 
 
@@ -52,9 +52,11 @@ namespace InfrastructureLayer.Repositories
 
         }
 
-        public Task<T> GetByIdAsync(Expression<Func<T, bool>> condition)
+        public async Task<T> GetByIdAsync(Expression<Func<T, bool>> condition)
         {
-            throw new NotImplementedException();
+         return  await _dbContext.Set<T>().AsNoTracking().FirstOrDefaultAsync(condition);
+
+        
         }
     }
 }
