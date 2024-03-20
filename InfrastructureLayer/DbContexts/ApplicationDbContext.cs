@@ -1,7 +1,7 @@
 ﻿using DomainLayer.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace InfrastuctureLayer.Data
+namespace InfrastuctureLayer.DbContexts
 {
     public class ApplicationDbContext:DbContext
     {
