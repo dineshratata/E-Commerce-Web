@@ -12,7 +12,7 @@ namespace ApplicationLayer.Dto.Category
         public int Id { get; set; }
 
 
-        public string Name { get; set; }    
+        public string Name { get; set; }  
 
 
     }

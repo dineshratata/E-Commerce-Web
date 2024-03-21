@@ -53,13 +53,7 @@ namespace E_Commerce.Controllers
 
               return Ok(addedEntity);
 
-            
-            if ( addedEntity != null )
-            {
-
-                return Ok("Created Operation  Successfully");
-
-            }
+          
 
 
 
@@ -72,11 +66,11 @@ namespace E_Commerce.Controllers
         [Route("Details")]
         [ProducesResponseType(StatusCodes.Status200OK)]
 
-        public ActionResult<Category>GetByid(int id)
+        public async Task <ActionResult> GetByid (int id)
         {
 
 
-            var gottenentity = _categoryService.GetByAsync(id);
+            var gottenentity = await _categoryService.GetByIdAsync(id);
                    
             if(gottenentity == null)
             {
@@ -110,7 +104,7 @@ namespace E_Commerce.Controllers
 
             }
 
-            var gottenEntity = await _categoryService.GetByAsync(id);
+            var gottenEntity = await _categoryService.GetByIdAsync(id);
 
 
             if (gottenEntity == null)

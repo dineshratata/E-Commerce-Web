@@ -15,6 +15,7 @@ namespace ApplicationLayer.ServiceRegistration
        public static IServiceCollection AddApplicationServices(this IServiceCollection services)
         {
            services.AddAutoMapper(typeof(MappingProfile));
+
             services.AddScoped<ICategoryService, CategoryService>();
 
             return services;

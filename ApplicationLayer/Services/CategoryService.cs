@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http.Headers;
+using System.Security.AccessControl;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -38,9 +39,9 @@ namespace ApplicationLayer.Services
 
         }
 
-        public async Task DeleteAsync(int Id)
+        public async Task DeleteAsync(int id)
         {
-         var idForRemove  = await _categoryRepository.GetByIdAsync(x => x.Id == Id);
+          var idForRemove  = await _categoryRepository.GetByIdAsync(x => x.Id == id);
 
            await _categoryRepository.DeleteAsync(idForRemove);
 
@@ -56,12 +57,12 @@ namespace ApplicationLayer.Services
 
         }
 
-        public async Task<CategoryDto> GetByAsync(int Id)
+        public async Task<CategoryDto> GetByIdAsync(int id)
         {
-           
-             var detailedCategory  =   await   _categoryRepository.GetByIdAsync(x=>x.Id==Id);
+              var detailedCategory  = await _categoryRepository.GetByIdAsync(x=>x.Id == id);
 
-            return _mappper.Map<CategoryDto>(detailedCategory);
+             return _mappper.Map<CategoryDto>(detailedCategory);
+
 
         }
 

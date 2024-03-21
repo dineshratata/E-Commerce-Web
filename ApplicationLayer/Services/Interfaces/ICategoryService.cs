@@ -14,7 +14,7 @@ namespace ApplicationLayer.Services.Interfaces
 
         Task<IEnumerable<CategoryDto>> GetAllAsync();
 
-        Task<CategoryDto> GetByAsync(int Id);
+        Task<CategoryDto> GetByIdAsync(int Id);
 
         Task UpdateAsync(UpdateCategoryDto updateCategoryDto);
 
