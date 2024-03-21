@@ -2,6 +2,7 @@ using InfrastuctureLayer.DbContexts;
 using InfrastructureLayer.InfrastructureRegistration;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
+using ApplicationLayer.ServiceRegistration;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,6 +10,12 @@ var builder = WebApplication.CreateBuilder(args);
 #region AddInfraStructureServies
 
 builder.Services.AddInfraStructureServices();
+
+#endregion
+
+#region // AddApplication Services 
+
+builder.Services.AddApplicationServices();
 
 #endregion
 

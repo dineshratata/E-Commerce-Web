@@ -1,4 +1,6 @@
-﻿
+﻿using ApplicationLayer.Dto.Category;
+using ApplicationLayer.Services;
+using ApplicationLayer.Services.Interfaces;
 using DomainLayer.Common.Contracts;
 using DomainLayer.Models;
 using InfrastuctureLayer.DbContexts;
@@ -13,13 +15,13 @@ namespace E_Commerce.Controllers
     [ApiController]
     public class CategoryController : ControllerBase
     {
-        private readonly  ICategoryRepository _categoryRepository;
+        private readonly ICategoryService _categoryService;
 
 
 
-        public CategoryController( ICategoryRepository categoryRepository)
+        public CategoryController(ICategoryService categoryService)
         {
-            _categoryRepository = categoryRepository;
+            _categoryService = categoryService;
         }
 
 
@@ -31,7 +33,7 @@ namespace E_Commerce.Controllers
         {
 
 
-           var categories = await _categoryRepository.GetAllAsync();
+           var categories = await _categoryService.GetAllAsync();
 
             return Ok(categories);
 
@@ -43,11 +45,11 @@ namespace E_Commerce.Controllers
         
         [ProducesResponseType(StatusCodes.Status200OK)]
         [HttpPost]
-        public async Task <ActionResult> Create([FromBody] Category category )
+        public async Task <ActionResult> Create([FromBody] CreateCategoryDto dto)
         {
-        
 
-              var  addedEntity = await _categoryRepository.CreateAsync(category);
+
+            var addedEntity = await _categoryService.CreateAsync(dto);
 
               return Ok(addedEntity);
 
@@ -74,7 +76,7 @@ namespace E_Commerce.Controllers
         {
 
 
-            var gottenentity = _categoryRepository.GetByIdAsync(x=>x.Id == id);
+            var gottenentity = _categoryService.GetByAsync(id);
                    
             if(gottenentity == null)
             {
@@ -108,7 +110,7 @@ namespace E_Commerce.Controllers
 
             }
 
-           var gottenEntity = await _categoryRepository.GetByIdAsync(x=>x.Id==id);
+            var gottenEntity = await _categoryService.GetByAsync(id);
 
 
             if (gottenEntity == null)
@@ -119,7 +121,7 @@ namespace E_Commerce.Controllers
 
 
 
-            await _categoryRepository.DeleteAsync(gottenEntity);
+            await _categoryService.DeleteAsync(id);
 
             return NoContent();
 
@@ -132,7 +134,7 @@ namespace E_Commerce.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
 
-        public async Task <ActionResult> Update([FromBody] Category category)
+        public async Task <ActionResult> Update([FromBody] UpdateCategoryDto dto)
 
 
 
@@ -146,7 +148,7 @@ namespace E_Commerce.Controllers
             }
 
 
-            await _categoryRepository.UpdateAsync(category);
+            await _categoryService.UpdateAsync(dto);
 
             return NoContent();
 
