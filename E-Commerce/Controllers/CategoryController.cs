@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 
 
+
 namespace E_Commerce.Controllers
 {
     [Route("api/[controller]")]
@@ -68,7 +69,7 @@ namespace E_Commerce.Controllers
 
         public async Task <ActionResult> GetByid (int id)
         {
-
+                
 
             var gottenentity = await _categoryService.GetByIdAsync(id);
                    
