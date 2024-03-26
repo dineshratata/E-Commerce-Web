@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ApplicationLayer.ApplicationConstants;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -7,13 +8,15 @@ using System.Threading.Tasks;
 
 namespace ApplicationLayer.Common
 {
-    partial class APIResponse
+    public class APIResponse
     {
+
+
         public HttpStatusCode StatusCodes { get; set; }
 
-        public bool Issuccess { get; set; }  = false;
+        public bool Issuccess { get; set; } = false;
 
-        public object Result { get; set; } 
+        public object Result { get; set; }
 
         public string DisplayMessage { get; set; } = "";
 
@@ -22,10 +25,11 @@ namespace ApplicationLayer.Common
         public List<APIWarning> Warnings { get; set; } = new();
 
 
-       public void AddError(string erroMessage)
+
+        public void AddError(string erroMessage)
         {
-            
-           APIError Error = new APIError(description:erroMessage );
+
+            APIError Error = new APIError(description: erroMessage);
             Errors.Add(Error);
 
 
@@ -36,7 +40,7 @@ namespace ApplicationLayer.Common
         {
 
 
-           APIWarning warning = new APIWarning(description:warningMessage );
+            APIWarning warning = new APIWarning(description: warningMessage);
 
             Warnings.Add(warning);
 
@@ -44,10 +48,42 @@ namespace ApplicationLayer.Common
 
 
         }
-        
 
 
-         
+        public APIResponse badrequest(HttpStatusCode statusCode)
+        {
+
+            
+            if (statusCode == HttpStatusCode.BadRequest)
+            {
+                this.StatusCodes = HttpStatusCode.BadRequest;
+
+
+
+            }
+
+            else if (statusCode == HttpStatusCode.InternalServerError) 
+            {
+                this.StatusCodes = HttpStatusCode.InternalServerError;
+
+            }
+
+            else
+            {
+                this.StatusCodes = HttpStatusCode.NotFound;
+
+
+            }
+            this.Issuccess = false;
+            this.DisplayMessage = CommonMessage.UpdateOperationFailed;
+
+            return this;
+
+        }
+
+
+
+
 
 
 

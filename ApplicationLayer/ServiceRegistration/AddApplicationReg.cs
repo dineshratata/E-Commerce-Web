@@ -18,6 +18,7 @@ namespace ApplicationLayer.ServiceRegistration
 
             services.AddScoped<ICategoryService, CategoryService>();
 
+
             return services;
 
         }
