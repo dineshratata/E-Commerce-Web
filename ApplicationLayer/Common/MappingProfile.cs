@@ -14,12 +14,21 @@ namespace ApplicationLayer.Common
        public MappingProfile()
         {
 
-            CreateMap<Category,CreateCategoryDto>().ReverseMap();
-            CreateMap<Category, UpdateCategoryDto>().ReverseMap();
-            CreateMap<Category, CategoryDto>().ReverseMap();
+            CreateMap<Category,CreateBrandDto>().ReverseMap();
+            CreateMap<Category, UpdateBrandDto>().ReverseMap();
+            CreateMap<Category, BrandDto>().ReverseMap();
 
 
-        }        
+
+
+
+            CreateMap<Category, CreateBrandDto>().ReverseMap();
+            CreateMap<Category, UpdateBrandDto>().ReverseMap();
+            CreateMap<Category, BrandDto>().ReverseMap();
+
+
+
+        }
 
     }
 }

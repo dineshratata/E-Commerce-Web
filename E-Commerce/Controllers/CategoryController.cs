@@ -78,7 +78,7 @@ namespace E_Commerce.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status201Created)]
 
-        public async Task<ActionResult> Create([FromBody] CreateCategoryDto dto)
+        public async Task<ActionResult> Create([FromBody] CreateBrandDto dto)
 
         {
             try
@@ -234,7 +234,7 @@ namespace E_Commerce.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
 
-        public async Task<ActionResult> Update([FromBody] UpdateCategoryDto dto)
+        public async Task<ActionResult> Update([FromBody] UpdateBrandDto dto)
 
         {
             try

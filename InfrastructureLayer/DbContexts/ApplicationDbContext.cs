@@ -14,5 +14,6 @@ namespace InfrastuctureLayer.DbContexts
 
 
         public DbSet <Category> Category { get; set; }    
+        public DbSet<Brand> Brands { get; set; }    
     }
 }
