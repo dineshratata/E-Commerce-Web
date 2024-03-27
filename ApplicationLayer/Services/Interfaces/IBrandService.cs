@@ -16,7 +16,7 @@ namespace ApplicationLayer.Services.Interfaces
         Task<IEnumerable<BrandDto>> GetAllAsync();
 
 
-        Task<BrandDto> UpdateAsync(UpdateBrandDto updateBrandDto);
+        Task UpdateAsync(UpdateBrandDto updateBrandDto);
 
 
         Task <BrandDto> GetByIdAsync(int id);

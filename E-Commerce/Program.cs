@@ -3,6 +3,7 @@ using InfrastructureLayer.InfrastructureRegistration;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using ApplicationLayer.ServiceRegistration;
+using InfrastructureLayer.Common;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -39,7 +40,60 @@ builder.Services.AddDbContext<ApplicationDbContext>(Options => Options.UseSqlSer
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+#region // Configuration for DataSeed
+
+
+ static async void UpdatadatabaseAsync(IHost host)
+{
+
+    using (var scope = host.Services.CreateScope())
+    {
+
+        var services = scope.ServiceProvider;
+
+
+        try
+        {
+            var context = services.GetRequiredService<ApplicationDbContext>();
+
+            if (context.Database.IsSqlServer())
+            {
+                context.Database.Migrate();
+
+
+            }
+
+            await SeedData.SeedDataAsync(context);
+
+
+        }
+        catch (Exception ex)
+        {
+
+            var logger = scope.ServiceProvider.GetRequiredService <ILogger<Program>>();
+
+            logger.LogError(ex, "Error Occured");
+
+
+           
+        }
+
+    }
+
+
+
+}
+
+
+
+
+
+
+#endregion
+
+
 var app = builder.Build();
+UpdatadatabaseAsync(app);
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

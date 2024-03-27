@@ -15,6 +15,7 @@ namespace InfrastructureLayer.InfrastructureRegistration
         {
             services.AddScoped(typeof(IGenericRepository<>),typeof (GenericeRepository<>));
             services.AddScoped <ICategoryRepository,CategoryRepository>();
+            services.AddScoped<IBrandRepository,BrandRepository>();
 
 
 

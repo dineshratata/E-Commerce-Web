@@ -13,5 +13,7 @@ namespace DomainLayer.Models
         public DateTime CreateOn { get; set; } = DateTime.UtcNow;
 
 
+
+
     }
 }

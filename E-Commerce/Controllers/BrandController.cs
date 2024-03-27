@@ -1,33 +1,30 @@
 ﻿using ApplicationLayer.ApplicationConstants;
 using ApplicationLayer.Common;
 using ApplicationLayer.Dto.Category;
-using ApplicationLayer.Services;
 using ApplicationLayer.Services.Interfaces;
-using Azure.Core;
+using AutoMapper.Configuration.Annotations;
 using DomainLayer.Common.Contracts;
-using DomainLayer.Models;
 using InfrastuctureLayer.DbContexts;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
-
-
 
 namespace E_Commerce.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class CategoryController : ControllerBase
+
+
+    public class BrandController : ControllerBase
     {
-        private readonly ICategoryService _categoryService;
+        private readonly IBrandService _brandService;
         protected APIResponse _apiResponse;
 
 
 
-        public CategoryController(ICategoryService categoryService)
+        public BrandController(IBrandService categoryService)
         {
-            _categoryService = categoryService;
+            _brandService = categoryService;
             _apiResponse = new();
 
 
@@ -44,10 +41,10 @@ namespace E_Commerce.Controllers
 
             try
             {
-                var categories = await _categoryService.GetAllAsync();
+                var Brands = await _brandService.GetAllAsync();
                 _apiResponse.StatusCodes = HttpStatusCode.OK;
                 _apiResponse.Issuccess = true;
-                _apiResponse.Result = categories;
+                _apiResponse.Result = Brands;
 
 
 
@@ -55,8 +52,8 @@ namespace E_Commerce.Controllers
 
             }
             catch (Exception)
-            {  
-                
+            {
+
                 _apiResponse.StatusCodes = HttpStatusCode.InternalServerError;
                 _apiResponse.DisplayMessage = CommonMessage.RecordNotFound;
 
@@ -78,7 +75,7 @@ namespace E_Commerce.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status201Created)]
 
-        public async Task<ActionResult<APIResponse>> Create([FromBody] CreateCategoryDto dto)
+        public async Task<ActionResult<APIResponse>> Create([FromBody] CreateBrandDto dto)
 
         {
             try
@@ -94,19 +91,20 @@ namespace E_Commerce.Controllers
 
 
                 }
-                var addedEntity = await _categoryService.CreateAsync(dto);
+                var addedEntity = await _brandService.CreateAsync(dto);
                 _apiResponse.Result = addedEntity;
                 _apiResponse.StatusCodes = HttpStatusCode.Created;
                 _apiResponse.DisplayMessage = CommonMessage.CreateOperationSuccess;
 
-                
-                
+
+
 
 
 
             }
             catch (Exception)
             {
+
                 _apiResponse.DisplayMessage = CommonMessage.CreateOperationFailed;
                 _apiResponse.AddError(CommonMessage.SystemError);
 
@@ -134,7 +132,7 @@ namespace E_Commerce.Controllers
 
 
 
-                var uniqueData = await _categoryService.GetByIdAsync(id);
+                var uniqueData = await _brandService.GetByIdAsync(id);
 
                 if (uniqueData == null)
                 {
@@ -186,7 +184,7 @@ namespace E_Commerce.Controllers
 
                 }
 
-                var gottenEntity = await _categoryService.GetByIdAsync(id);
+                var gottenEntity = await _brandService.GetByIdAsync(id);
 
                 if (gottenEntity == null)
                 {
@@ -200,7 +198,7 @@ namespace E_Commerce.Controllers
 
                 }
 
-                await _categoryService.DeleteAsync(id);
+                await _brandService.DeleteAsync(id);
                 _apiResponse.StatusCodes = HttpStatusCode.OK;
                 _apiResponse.DisplayMessage = CommonMessage.DeleteOperationSuccess;
 
@@ -233,7 +231,7 @@ namespace E_Commerce.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
 
-        public async Task<ActionResult<APIResponse>> Update([FromBody] UpdateCategoryDto dto)
+        public async Task<ActionResult<APIResponse>> Update([FromBody] UpdateBrandDto dto)
 
         {
             try
@@ -267,12 +265,12 @@ namespace E_Commerce.Controllers
 
 
 
-                await _categoryService.UpdateAsync(dto);
-                    _apiResponse.StatusCodes = HttpStatusCode.NoContent;
-                    _apiResponse.Issuccess = true;
-                    _apiResponse.DisplayMessage = CommonMessage.UpdateOperationSuccess;
+                await _brandService.UpdateAsync(dto);
+                _apiResponse.StatusCodes = HttpStatusCode.NoContent;
+                _apiResponse.Issuccess = true;
+                _apiResponse.DisplayMessage = CommonMessage.UpdateOperationSuccess;
 
-                
+
 
             }
             catch (Exception)
@@ -295,3 +293,4 @@ namespace E_Commerce.Controllers
         }
     }
 }
+
