@@ -38,9 +38,9 @@ namespace ApplicationLayer.Services.Interfaces
 
         public async Task<IEnumerable<BrandDto>> GetAllAsync()
         {
-            var brands   =  await  _brandRepository.GetAllAsync();
+            var catgories = await _brandRepository.GetAllAsync();
 
-            return _mapper.Map<IEnumerable<BrandDto>>(brands);
+            return _mapper.Map<IEnumerable<BrandDto>>(catgories);
 
         }
 

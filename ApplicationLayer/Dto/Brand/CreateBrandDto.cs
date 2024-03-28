@@ -11,7 +11,7 @@ namespace ApplicationLayer.Dto.Category
     {
         public string Name { get; set; }
 
-        public string EstabliseYear { get; set; }
+        public string EstablisedYear { get; set; }
 
     }
 }

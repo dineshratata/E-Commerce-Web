@@ -1,4 +1,5 @@
 ﻿using ApplicationLayer.Dto.Category;
+using ApplicationLayer.Dto.Product;
 using AutoMapper;
 using DomainLayer.Models;
 using System;
@@ -27,6 +28,9 @@ namespace ApplicationLayer.Common
             CreateMap<Brand, BrandDto>().ReverseMap();
 
 
+            CreateMap<Product, CreateProductDto>().ReverseMap();
+            CreateMap<Product,UpdateProductDto>().ReverseMap();
+            CreateMap<Product,ProductDto>().ReverseMap();
 
         }
 

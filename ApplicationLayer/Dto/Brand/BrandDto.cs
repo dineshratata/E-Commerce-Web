@@ -10,11 +10,11 @@ namespace ApplicationLayer.Dto.Category
 {
     public class BrandDto
     {
-       public int Id { get; set; }  
-
+      
+        public int Id { get; set; } 
         public string Name { get; set; }
 
-        public string EstabliseYear { get; set; }   
+        public string EstablisedYear { get; set; }   
 
 
     }

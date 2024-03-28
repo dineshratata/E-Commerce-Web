@@ -53,7 +53,7 @@ namespace ApplicationLayer.Services
         {
             var catgories =    await _categoryRepository.GetAllAsync();
 
-           return _mappper.Map<IEnumerable<CategoryDto>>(catgories);
+            return _mappper.Map<IEnumerable<CategoryDto>>(catgories);
 
         }
 
