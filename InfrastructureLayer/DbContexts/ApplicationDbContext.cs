@@ -1,11 +1,12 @@
-﻿using DomainLayer.Models;
+﻿using ApplicationLayer.Common;
+using DomainLayer.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace InfrastuctureLayer.DbContexts
 {
-    public class ApplicationDbContext:IdentityDbContext<IdentityUser>
+    public class ApplicationDbContext:IdentityDbContext<ApplicationUser>
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options):base(options)
         {

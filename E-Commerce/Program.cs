@@ -4,6 +4,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using ApplicationLayer.ServiceRegistration;
 using InfrastructureLayer.Common;
+using Microsoft.AspNetCore.Identity;
+using ApplicationLayer.Common;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -29,6 +31,11 @@ builder.Services.AddCors(options =>
 
 });
 
+builder.Services.AddIdentity<ApplicationUser, IdentityRole>(Options =>
+    {
+
+
+    }).AddEntityFrameworkStores<ApplicationDbContext>();
 #endregion
 
 
