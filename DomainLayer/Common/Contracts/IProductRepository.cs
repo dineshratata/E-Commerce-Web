@@ -9,8 +9,11 @@ namespace DomainLayer.Common.Contracts
 {
     public  interface IProductRepositry : IGenericRepository<Product>
     {
-
+        Task<IEnumerable<Product>> GetAllProductAsync();
         Task UpdateAsync(Product product);  
 
     }
+
+
+
 }

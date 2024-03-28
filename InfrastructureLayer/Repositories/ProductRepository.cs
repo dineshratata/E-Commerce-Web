@@ -1,6 +1,7 @@
 ﻿using DomainLayer.Common.Contracts;
 using DomainLayer.Models;
 using InfrastuctureLayer.DbContexts;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,6 +18,10 @@ namespace InfrastructureLayer.Repositories
 
         }
 
+        public async Task<IEnumerable<Product>> GetAllProductAsync()
+        {
+            return await _dbContext.Products.AsNoTracking().Include(x => x.Category).Include(x => x.Brand).ToListAsync();
+        }
 
         public async Task UpdateAsync(Product product)
         {

@@ -49,7 +49,7 @@ namespace ApplicationLayer.Services
 
         public async Task<IEnumerable<ProductDto>> GetAllAsync()
         {
-          var ProductsAll    =  await  _productRepository.GetAllAsync();
+          var ProductsAll    =  await  _productRepository.GetAllProductAsync();
 
            return _mapper.Map<IEnumerable<ProductDto>>(ProductsAll);
 
