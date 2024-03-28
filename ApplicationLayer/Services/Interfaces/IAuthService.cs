@@ -13,6 +13,7 @@ namespace ApplicationLayer.Services.Interfaces
     {
 
         Task<IEnumerable<IdentityError>> Register(Register register);
+        
 
     }
 }
