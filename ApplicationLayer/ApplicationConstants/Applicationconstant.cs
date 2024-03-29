@@ -10,7 +10,13 @@ namespace ApplicationLayer.ApplicationConstants
     {
     }
 
-    public class CommonMessage { 
+    public class CommonMessage {
+
+        public const string RegisterSuccess = "RegisterUserSuccessFully";
+        public const string RegisterFail = "RegisterUserFailed";
+
+        public const string LoginSuccess = "Login SuccessFully";
+        public const string LoginFail = "LoginFailed";
 
         public const string CreateOperationSuccess = "CreateOperationSuccess";
         public const string UpdateOperationSuccess = "UpdateOperationSuccess";

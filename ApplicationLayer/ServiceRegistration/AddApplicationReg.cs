@@ -16,9 +16,16 @@ namespace ApplicationLayer.ServiceRegistration
         {
            services.AddAutoMapper(typeof(MappingProfile));
 
+            ///services Container for Required Services
+            ///
+
+
+
+            services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<ICategoryService, CategoryService>();
             services.AddScoped<IBrandService, BrandService>();
             services.AddScoped<IProductService, ProductService>();
+              
 
 
             return services;
