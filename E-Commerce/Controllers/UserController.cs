@@ -42,9 +42,6 @@ namespace E_Commerce.Controllers
                     _apiResponse.AddError(ModelState.ToString());
                     _apiResponse.DisplayMessage = CommonMessage.RegisterFail;
                     return _apiResponse;    
-
-
-
                 }
 
 
