@@ -1,40 +1,48 @@
 ﻿using ApplicationLayer.Common;
 using ApplicationLayer.InputModels;
+using ApplicationLayer.ServiceRegistration;
 using ApplicationLayer.Services.Interfaces;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace ApplicationLayer.Services
 {
     public class AuthService : IAuthService
-    {
-
+    {    
+        
         private readonly UserManager<ApplicationUser> _userManager;
-        ApplicationUser ApplicationUser;
+        private readonly SignInManager<ApplicationUser> _signManger;
+        private ApplicationUser _applicationUser;
 
 
-        public AuthService(UserManager<ApplicationUser> userManager)
+
+        public AuthService(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signManger)
         {
             _userManager = userManager;
-            ApplicationUser = new();
+            _applicationUser = new();
+            _signManger = signManger;
             
         }
 
+        
+
         public async Task<IEnumerable<IdentityError>> Register(Register register)
         {
-              
-            ApplicationUser.FirstName  = register.FirstName;    
-            ApplicationUser.LastName = register.LastName;
-            ApplicationUser.Email = register.Email;
-            ApplicationUser.UserName = register.Email;
+
+            _applicationUser.FirstName  = register.FirstName;
+            _applicationUser.LastName = register.LastName;
+            _applicationUser.Email = register.Email;
+            _applicationUser.UserName = register.Email;
             
             
 
-         var result     = await  _userManager.CreateAsync(ApplicationUser,register.Password ); 
+         var result     = await  _userManager.CreateAsync(_applicationUser, register.Password ); 
 
             if (result.Succeeded) { 
             
@@ -46,7 +54,53 @@ namespace ApplicationLayer.Services
             return result.Errors;
         }
 
-        
+
+
+        public async Task<object> Login(Login login)
+        {
+            var Applicationuser = await _userManager.FindByEmailAsync(login.Email);
+
+
+            if (Applicationuser == null)
+            {
+
+                return "Enter Valid Email";
+
+            }
+
+
+          var result  = await _signManger.PasswordSignInAsync(Applicationuser, login.Password, isPersistent: true,lockoutOnFailure:true);
+
+          var isavalidCredentials = await _userManager.CheckPasswordAsync(Applicationuser, login.Password);
+
+            if(result.Succeeded)
+            {
+
+                return true;
+
+            }
+
+
+            if (result.IsLockedOut)
+            {
+
+                return "Your Account Is Locked Contact Admin";
+
+
+            }
+
+
+            if(isavalidCredentials==false)
+            {
+                return "Your Password Is InCorrect";
+
+            }
+
+
+            return result;
+            
+        }
+
 
 
     }

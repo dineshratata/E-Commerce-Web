@@ -1,6 +1,5 @@
 ﻿using ApplicationLayer.InputModels;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore.Internal;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +12,10 @@ namespace ApplicationLayer.Services.Interfaces
     {
 
         Task<IEnumerable<IdentityError>> Register(Register register);
-        
+
+
+        Task<object> Login(Login login);
+
 
     }
 }

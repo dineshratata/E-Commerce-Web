@@ -33,7 +33,8 @@ builder.Services.AddCors(options =>
 
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>(Options =>
     {
-
+        Options.SignIn.RequireConfirmedEmail = false;
+        Options.User.RequireUniqueEmail = true;
 
     }).AddEntityFrameworkStores<ApplicationDbContext>();
 #endregion

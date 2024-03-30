@@ -4,6 +4,7 @@ using ApplicationLayer.InputModels;
 using ApplicationLayer.Services;
 using ApplicationLayer.Services.Interfaces;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 
@@ -14,6 +15,7 @@ namespace E_Commerce.Controllers
     public class UserController : ControllerBase
     {
         private readonly IAuthService _authService;
+        private readonly SignInManager<ApplicationUser> _signInManager;
         private APIResponse _apiResponse;
 
         public UserController(IAuthService authservice)
@@ -26,11 +28,12 @@ namespace E_Commerce.Controllers
 
 
         [HttpPost]
+        [Route("Register")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
 
-        public async Task<ActionResult<APIResponse>> create(Register register)
+        public async Task<ActionResult<APIResponse>> Register(Register register)
         {
             try
             {
@@ -61,6 +64,66 @@ namespace E_Commerce.Controllers
 
                 _apiResponse.StatusCodes = HttpStatusCode.InternalServerError;
                 
+                _apiResponse.AddError(CommonMessage.SystemError);
+            }
+
+            return Ok(_apiResponse);
+        }
+
+
+
+        [HttpPost]
+        [Route("Login")]
+
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+
+        public async Task<ActionResult<APIResponse>> Login(Login login)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    _apiResponse.AddError(ModelState.ToString());
+                    _apiResponse.DisplayMessage = CommonMessage.RegisterFail;
+                    return _apiResponse;
+
+
+
+                }
+
+
+
+
+                var user = await _authService.Login(login);
+
+
+                if (user is string)
+                {
+
+                    _apiResponse.StatusCodes = HttpStatusCode.BadRequest;
+                    _apiResponse.DisplayMessage = CommonMessage.LoginFail;
+                    _apiResponse.Result = user;
+                    return _apiResponse;
+                   
+
+                }
+
+
+
+                _apiResponse.StatusCodes = HttpStatusCode.OK;
+                _apiResponse.DisplayMessage = CommonMessage.LoginSuccess;
+                _apiResponse.Issuccess = true;
+
+
+
+            }
+            catch (Exception)
+            {
+
+                _apiResponse.StatusCodes = HttpStatusCode.InternalServerError;
+
                 _apiResponse.AddError(CommonMessage.SystemError);
             }
 
