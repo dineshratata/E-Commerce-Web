@@ -18,10 +18,11 @@ namespace E_Commerce.Controllers
         private readonly SignInManager<ApplicationUser> _signInManager;
         private APIResponse _apiResponse;
 
-        public UserController(IAuthService authservice)
+        public UserController(IAuthService authservice,SignInManager<ApplicationUser> signInManager)
         {
             _authService = authservice;
             _apiResponse = new APIResponse();
+            _signInManager = signInManager;
         }
 
 
